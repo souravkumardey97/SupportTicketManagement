@@ -4,11 +4,11 @@ import {
   addComment,
   allowedTransitions,
   getTicket,
-  listUsers,
   TICKET_PRIORITIES,
   updateTicket,
   updateTicketStatus,
 } from '../api/ticketsApi'
+import { listUsers } from '../api/usersApi'
 import { ErrorBanner } from '../components/ErrorBanner'
 import {
   ApiError,

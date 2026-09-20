@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -50,13 +49,26 @@ class AuthControllerWebMvcTest {
     }
 
     @Test
-    void loginReturns401OnBadPassword() throws Exception {
+    void loginReturns400OnBadPassword() throws Exception {
         when(authService.login(any(LoginRequest.class)))
-                .thenThrow(new BadCredentialsException("Invalid credentials"));
+                .thenThrow(new com.supportticket.exception.BadRequestException("Invalid username or password"));
 
         mockMvc.perform(post("/api/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest("admin", "wrong"))))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("BAD_REQUEST"))
+                .andExpect(jsonPath("$.message").value("Invalid username or password"));
+    }
+
+    @Test
+    void loginReturns400WhenFieldsBlank() throws Exception {
+        mockMvc.perform(post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"username\":\"\",\"password\":\"\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.fieldErrors.username").exists())
+                .andExpect(jsonPath("$.fieldErrors.password").exists());
     }
 }

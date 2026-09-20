@@ -14,6 +14,12 @@ export interface LoginRequest {
   password: string
 }
 
+export interface CreateUserRequest {
+  username: string
+  password: string
+  role: Role
+}
+
 export interface LoginResponse {
   accessToken: string
   tokenType: string

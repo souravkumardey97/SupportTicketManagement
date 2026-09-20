@@ -16,10 +16,13 @@ function formatError(error: unknown): { title: string; details: string[] } {
         ),
       )
     }
+    const hasFieldErrors = details.length > 0
     const title =
-      apiError.error && apiError.error !== 'VALIDATION_ERROR'
-        ? `${apiError.error}: ${apiError.message}`
-        : apiError.message
+      apiError.error === 'VALIDATION_ERROR' || hasFieldErrors
+        ? apiError.message || 'Request validation failed'
+        : apiError.error
+          ? `${apiError.error}: ${apiError.message}`
+          : apiError.message
     return { title, details }
   }
   if (error instanceof Error) {

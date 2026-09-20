@@ -15,7 +15,8 @@ export function Layout() {
           {isAdmin && (
             <>
               <Link to="/tickets">Tickets</Link>
-              <Link to="/tickets/new">Create</Link>
+              <Link to="/tickets/new">Create ticket</Link>
+              <Link to="/users/new">Create user</Link>
             </>
           )}
           <button type="button" onClick={logout}>Log out</button>

@@ -3,6 +3,7 @@ import { AuthProvider } from './auth/AuthContext'
 import { Layout } from './components/Layout'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { CreateTicketPage } from './pages/CreateTicketPage'
+import { CreateUserPage } from './pages/CreateUserPage'
 import { LoginPage } from './pages/LoginPage'
 import { NotAuthorizedPage } from './pages/NotAuthorizedPage'
 import { TicketDetailPage } from './pages/TicketDetailPage'
@@ -19,6 +20,7 @@ export default function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/tickets" element={<TicketListPage />} />
               <Route path="/tickets/new" element={<CreateTicketPage />} />
+              <Route path="/users/new" element={<CreateUserPage />} />
               <Route path="/tickets/:ticketId" element={<TicketDetailPage />} />
             </Route>
             <Route path="/" element={<Navigate to="/tickets" replace />} />

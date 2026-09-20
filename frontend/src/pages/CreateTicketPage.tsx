@@ -1,10 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  createTicket,
-  listUsers,
-  TICKET_PRIORITIES,
-} from '../api/ticketsApi'
+import { createTicket, TICKET_PRIORITIES } from '../api/ticketsApi'
+import { listUsers } from '../api/usersApi'
 import { ErrorBanner } from '../components/ErrorBanner'
 import type { TicketPriority, UserSummary } from '../types/api'
 

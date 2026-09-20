@@ -11,7 +11,6 @@ import type {
   TicketPriority,
   TicketStatus,
   UpdateTicketRequest,
-  UserSummary,
 } from '../types/api'
 
 export function login(request: LoginRequest): Promise<LoginResponse> {
@@ -19,11 +18,6 @@ export function login(request: LoginRequest): Promise<LoginResponse> {
     method: 'POST',
     body: JSON.stringify(request),
   })
-}
-
-export function listUsers(role?: 'USER' | 'ADMIN'): Promise<UserSummary[]> {
-  const query = role ? `?role=${role}` : ''
-  return apiRequest<UserSummary[]>(`/users${query}`)
 }
 
 export function listTickets(params: {

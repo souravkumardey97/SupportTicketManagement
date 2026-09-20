@@ -54,6 +54,28 @@ paths:
                   $ref: '#/components/schemas/UserSummary'
         '403':
           $ref: '#/components/responses/Forbidden'
+    post:
+      tags: [Users]
+      summary: Create a user (ADMIN only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSummary'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
   /api/v1/tickets:
     get:
       tags: [Tickets]
@@ -267,6 +289,20 @@ components:
     TicketStatus:
       type: string
       enum: [OPEN, IN_PROGRESS, RESOLVED, CLOSED, CANCELLED]
+    CreateUserRequest:
+      type: object
+      required: [username, password, role]
+      properties:
+        username:
+          type: string
+          maxLength: 100
+        password:
+          type: string
+          minLength: 8
+          maxLength: 128
+        role:
+          type: string
+          enum: [ADMIN, USER]
     CreateTicketRequest:
       type: object
       required: [title, description, assigneeId]

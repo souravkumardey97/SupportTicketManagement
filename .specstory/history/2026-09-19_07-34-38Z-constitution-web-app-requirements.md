@@ -6899,3 +6899,1912 @@ _**Agent (composer-2.5)**_
 **`UpdateTicketRequest`** TypeScript type updated so title, priority, and assigneeId are required.
 
 OpenAPI **`UpdateTicketRequest`** documents `required: [title, priority, assigneeId]`.
+
+---
+
+_**User**_
+
+For Admin User,give an option to create users.
+Design frontend and Backend for the same.
+input -> username, password and role.
+Keep ADMIN role authorization for this api
+
+---
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Designing a user creation feature for ADMIN users. The API will accept username, password, and role. Frontend and backend implementation are needed.
+
+Reviewing existing user management and authentication patterns in the codebase.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+Exploring existing user/auth patterns to add an admin-only create-user API and UI.
+
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "UserController|UserService|UserEntity"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "UserController|UserService|UserEntity",
+  "topFiles": [
+    {
+      "matchCount": 4,
+      "uri": "backend/src/main/java/com/supportticket/security/DatabaseUserPrincipal.java"
+    },
+    {
+      "matchCount": 4,
+      "uri": "backend/src/main/java/com/supportticket/persistence/UserRepository.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/service/UserService.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/service/TicketMapper.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/persistence/entity/TicketEntity.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/persistence/entity/UserEntity.java"
+    },
+    {
+      "matchCount": 4,
+      "uri": "backend/src/test/java/com/supportticket/api/UserControllerWebMvcTest.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/service/CommentServiceImpl.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/persistence/entity/CommentEntity.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/service/UserServiceImpl.java"
+    },
+    {
+      "matchCount": 4,
+      "uri": "backend/src/test/java/com/supportticket/persistence/TicketRepositoryTest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/security/JwtService.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/service/AuthServiceImpl.java"
+    },
+    {
+      "matchCount": 5,
+      "uri": "backend/src/test/java/com/supportticket/service/TicketServiceTest.java"
+    },
+    {
+      "matchCount": 4,
+      "uri": "backend/src/main/java/com/supportticket/api/UserController.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/security/CustomUserDetailsService.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/bootstrap/AdminUserBootstrapRunner.java"
+    },
+    {
+      "matchCount": 4,
+      "uri": "backend/src/main/java/com/supportticket/service/TicketServiceImpl.java"
+    }
+  ],
+  "totalFiles": 18,
+  "totalMatches": 54
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/config/SecurityConfig.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/App.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Reviewing existing user controllers, services, entities, authentication patterns, and UI components to understand current implementation before designing the new user creation feature.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/api/UserController.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/UserServiceImpl.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/persistence/entity/UserEntity.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/UserControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/components/Layout.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Planning the backend structure first. Starting with a CreateUserRequest DTO to validate username, password, and role fields.
+
+Mapping out the service implementation next. Password encoding and duplicate username checks will be added to the user service. A POST endpoint will return a 201 response with a sanitized user summary. Transactional boundaries will be adjusted to allow writes. Web tests will cover success and validation scenarios. The frontend plan includes a new user creation page with routing and navigation links.
+
+Reviewing existing LoginRequest and password validation patterns to ensure consistency.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/api/dto/LoginRequest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/bootstrap/AdminUserBootstrapRunner.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/pages/CreateTicketPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs",
+  "pattern": "/users"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs",
+  "pattern": "/users",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "specs/001-support-ticket-management/contracts/openapi.yaml"
+    },
+    {
+      "matchCount": 4,
+      "uri": "specs/001-support-ticket-management/tasks.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "specs/001-support-ticket-management/plan.md"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 7
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking UserRepository for an existing username check method.
+
+Reviewing the OpenAPI users section. Checking BadRequestException for duplicate username handling.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/persistence/UserRepository.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/types/api.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Starting with the CreateUserRequest structure.
+
+Adding validation constraints to the request DTO. The service layer will check for duplicate usernames before creating a user. A BadRequestException will be thrown for existing usernames.
+
+Using BadRequestException for duplicate usernames instead of 409 Conflict. The service method needs @Transactional since the class defaults to readOnly.
+
+The service implementation trims the username, encodes the password, and returns a mapped user summary response. Now starting the UserController POST endpoint.
+
+The UserController POST endpoint returns CREATED status. No extra authorization annotation is needed because the global security configuration already restricts all /api/v1/** paths to ADMIN users.
+
+Planned tests cover successful creation, validation failures, duplicate username errors, and 403 forbidden access for non-admin roles. The UserService will be tested with mocked repositories.
+
+For the frontend, a dedicated usersApi module will handle the createUser call.
+
+Designing a Create User page with username, password, and role dropdown. On success it will show a confirmation message and allow resetting the form or navigating back. The navigation will add a link to /users/new. Considering splitting the existing listUsers call into a dedicated usersApi module.
+
+A dedicated `usersApi.ts` module will hold both `listUsers` and `createUser`. Frontend imports will be updated to use this new module directly. The `listUsers` endpoint will be moved out of `ticketsApi` rather than re-exported there.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend",
+  "pattern": "listUsers"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend",
+  "pattern": "listUsers",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "frontend/src/api/ticketsApi.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "frontend/src/pages/CreateTicketPage.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "frontend/src/pages/TicketDetailPage.tsx"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 5
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/UserService.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+A new `usersApi.ts` file will hold `listUsers` and `createUser`. Existing imports will be updated directly rather than re-exporting from `ticketsApi`.
+
+Backend validation will be added to `CreateUserRequest`: `@NotNull` on role and `@NotBlank` on password. Username trimming will match the ticket creation logic. A `UserServiceTest` will be created and the OpenAPI spec updated. Integration tests may follow. Tests will run next.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+Implementing backend and frontend for admin user creation.
+
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/api/dto/CreateUserRequest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/UserService.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/UserServiceImpl.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/UserServiceImpl.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/api/UserController.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/service/UserServiceTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/api/UserController.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/UserControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/UserControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/UserControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Updating frontend files and OpenAPI specification.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/api/usersApi.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/pages/CreateUserPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/types/api.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/api/ticketsApi.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/pages/CreateTicketPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/pages/TicketDetailPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/api/ticketsApi.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/App.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/components/Layout.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend",
+  "pattern": "success-banner"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend",
+  "pattern": "success-banner",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "frontend/src/pages/CreateUserPage.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/App.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Adding minimal CSS for the success banner in index.css, referencing the existing error-banner style.
+
+Updating the OpenAPI specification and running tests.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "contextAfter": 8,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/index.css",
+  "pattern": "error-banner"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/index.css",
+  "pattern": "error-banner",
+  "topFiles": [
+    {
+      "matchCount": 18,
+      "uri": "frontend/src/index.css"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "contextAfter": 15,
+  "contextBefore": 0,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "CreateTicketRequest:"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "CreateTicketRequest:",
+  "topFiles": [
+    {
+      "matchCount": 16,
+      "uri": "specs/001-support-ticket-management/contracts/openapi.yaml"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Adding the CreateUserRequest schema to the OpenAPI specification before the CreateTicketRequest schema.
+
+Adding success-banner CSS. Checking BadRequest response definitions in the OpenAPI spec. Running Maven tests and npm build.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/index.css</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend &amp;&amp; ./mvnw -q test 2&gt;&amp;1 | tail -8</summary>
+```bash
+cd /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend && ./mvnw -q test 2>&1 | tail -8
+```
+
+```
+]633;C
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-20T23:29:58.723+05:30  INFO 15609 --- [support-ticket-management] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-09-20T23:29:58.735+05:30  INFO 15609 --- [support-ticket-management] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-20T23:29:58.735+05:30  INFO 15609 --- [support-ticket-management] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-20T23:29:58.736+05:30  INFO 15609 --- [support-ticket-management] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-09-20T23:29:58.741+05:30  INFO 15609 --- [support-ticket-management] [           main] c.s.a.GlobalExceptionHandlerWebMvcTest   : Started GlobalExceptionHandlerWebMvcTest in 0.355 seconds (process running for 10.191)
+
+```
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend &amp;&amp; npm run build 2&gt;&amp;1 | tail -8</summary>
+```bash
+cd /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend && npm run build 2>&1 | tail -8
+```
+
+```
+✓ 39 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.30 kB
+dist/assets/index-pbkJVjvS.css    2.36 kB │ gzip:  0.91 kB
+dist/assets/index-mnhyBmgP.js   275.49 kB │ gzip: 86.34 kB
+
+✓ built in 747ms
+
+```
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Waiting for Maven tests to complete.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/.cursor/projects/home-sourav-kumar-dey-Documents-C2-practice-SupportTicketManagement/terminals/427939.txt</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+The process is still running.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: sleep 15 &amp;&amp; tail -10 /home/sourav-kumar-dey/.cursor/projects/home-sourav-kumar-dey-Documents-C2-practice-SupportTicketManagement/terminals/427939.txt</summary>
+```bash
+sleep 15 && tail -10 /home/sourav-kumar-dey/.cursor/projects/home-sourav-kumar-dey-Documents-C2-practice-SupportTicketManagement/terminals/427939.txt
+```
+
+```
+2026-09-20T23:29:58.735+05:30  INFO 15609 --- [support-ticket-management] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-20T23:29:58.735+05:30  INFO 15609 --- [support-ticket-management] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-20T23:29:58.736+05:30  INFO 15609 --- [support-ticket-management] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-09-20T23:29:58.741+05:30  INFO 15609 --- [support-ticket-management] [           main] c.s.a.GlobalExceptionHandlerWebMvcTest   : Started GlobalExceptionHandlerWebMvcTest in 0.355 seconds (process running for 10.191)
+
+---
+exit_code: 0
+elapsed_ms: 40185
+ended_at: 2026-09-20T17:59:59.089Z
+---
+
+```
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Tests passed. Checking whether the Role schema exists in the OpenAPI spec for the CreateUserRequest reference.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "Role:"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "Role:",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking OpenAPI specs for existing USER and ADMIN role definitions to guide the implementation.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "enum:.*ADMIN"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "enum:.*ADMIN",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "specs/001-support-ticket-management/contracts/openapi.yaml"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Reviewing the database schema around lines 268–290 to understand the current structure before designing the user creation feature.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+The CreateUserRequest schema references a Role definition that may not exist. It needs to be fixed by either inlining the enum or adding the missing Role schema.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+The OpenAPI Role reference will be fixed by using an inline enum, similar to UserSummary.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking whether a BadRequest response reference exists.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "BadRequest:"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/specs/001-support-ticket-management/contracts/openapi.yaml",
+  "pattern": "BadRequest:",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "specs/001-support-ticket-management/contracts/openapi.yaml"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Planning the full-stack design for admin user creation. The backend will enforce ADMIN role authorization. The frontend will collect username, password, and role.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+### Backend
+- **`POST /api/v1/users`** (ADMIN only via existing `/api/v1/**` security)
+- **Body:** `CreateUserRequest` — `username` (required, max 100), `password` (required, 8–128 chars), `role` (`ADMIN` | `USER`)
+- **Response:** `201` + `UserSummary` (id, username, role; no password)
+- **Validation:** Bean validation → `400` + `fieldErrors`
+- **Business rules:** BCrypt hash; duplicate username → `400` “Username already exists”
+
+**Files:** `CreateUserRequest.java`, `UserController`, `UserService` / `UserServiceImpl`, `UserServiceTest`, extended `UserControllerWebMvcTest`, OpenAPI.
+
+### Frontend
+- **`/users/new`** — `CreateUserPage` (username, password, role)
+- Nav: **Create user** (admin layout only, behind `ProtectedRoute`)
+- **`usersApi.ts`** — `listUsers`, `createUser` (ticket pages import `listUsers` from here)
+- Success banner after create; errors via `ErrorBanner` (validation + duplicate username)
+
+### How to try
+Log in as ADMIN → **Create user** in the header → submit form. New USER accounts show up in ticket assignee dropdowns; new ADMIN accounts can sign in with the password you set.
+
+---
+
+_**User**_
+
+<system_notification>
+The following task has finished. If you were already aware, ignore this notification and do not restate prior responses.
+
+<task>
+kind: shell
+status: success
+task_id: 427939
+title: Run backend unit tests
+tool_call_id: tool_b1085150-d158-4781-8ee7-c144da1df24
+output_path: /home/sourav-kumar-dey/.cursor/projects/home-sourav-kumar-dey-Documents-C2-practice-SupportTicketManagement/terminals/427939.txt
+</task>
+</system_notification>
+<user_query>Briefly inform the user about the task result and perform any follow-up actions (if needed). If there's no follow-ups needed, don't explicitly say that.</user_query>
+
+---
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+The create user feature implementation is complete.
+
+Maven tests passed successfully.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+Admin **create user** is implemented end-to-end.
+
+**Backend:** `POST /api/v1/users` with username, password (8+ chars), and role; ADMIN-only; BCrypt hashing; duplicate username returns 400.
+
+**Frontend:** `/users/new` and a **Create user** link in the admin header; success and validation errors on the page.
+
+**Checks:** `./mvnw test` passed (including new `UserServiceTest` and `UserControllerWebMvcTest` cases); `npm run build` succeeded.
+
+To verify manually: sign in as ADMIN → **Create user** → create a USER and confirm they appear in ticket assignee lists (or can log in if you created an ADMIN).
+
+---
+
+_**User**_
+
+currently for validation error it throws 401 unauthorized, fix this, show 400 bad request and show proper error message
+
+---
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Validation errors currently return 401 Unauthorized. They should return 400 Bad Request with a proper error message.
+
+A ty filter may be routing validation failures through the authentication entry point. Searching the codebase for validation error handling.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+Tracing why validation failures return 401 instead of 400.
+
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/security/JwtAuthenticationFilter.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/config/RestAuthenticationEntryPoint.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/api/parseApiError.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "401|UNAUTHORIZED|validation"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "401|UNAUTHORIZED|validation",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/api/dto/UpdateTicketRequest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/api/dto/UpdateTicketStatusRequest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/api/UserController.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/api/CommentController.java"
+    },
+    {
+      "matchCount": 7,
+      "uri": "backend/src/main/java/com/supportticket/exception/GlobalExceptionHandler.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/api/dto/CreateUserRequest.java"
+    },
+    {
+      "matchCount": 4,
+      "uri": "backend/mvnw"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/api/dto/LoginRequest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/pom.xml"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/api/TicketController.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/api/dto/CreateTicketRequest.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/test/java/com/supportticket/api/ExceptionTestController.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/main/java/com/supportticket/api/AuthController.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/api/dto/CreateCommentRequest.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/config/RestAuthenticationEntryPoint.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/supportticket/api/AuthControllerWebMvcTest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/test/java/com/supportticket/api/GlobalExceptionHandlerWebMvcTest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/mvnw.cmd"
+    }
+  ],
+  "totalFiles": 18,
+  "totalMatches": 39
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+The 401 error likely stems from JSON deserialization failure during validation.
+
+Invalid JWTs trigger 401 before controller validation runs. Malformed requests may also return 401 instead of 400.
+
+A missing handler for `HttpMessageNotReadableException` is needed to catch invalid JSON bodies. Password length errors should return 400 via `MethodArgumentNotValidException`. The open faults file needs review.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/Faults Identified</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/exception/GlobalExceptionHandler.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/vite.config.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Investigating why validation errors currently return 401 Unauthorized instead of 400 Bad Request.
+
+Identified specific exceptions causing the 401 misclassification: ConstraintViolationException on service-layer parameters, HttpMessageNotReadableException for malformed JSON, HandlerMethodValidationException for @RequestParam, and missing POST bodies.
+
+The 401 likely comes from expired JWT tokens. Invalid tokens clear the security context and force authentication failures. The user may be submitting invalid data with a valid token. Also checking whether the global exception handler is active in test contexts.
+
+Confirmed the exception handler is global via @RestControllerAdvice. Null values in JSON are caught by validation and return 400. Invalid enum strings like "INVALID" trigger HttpMessageNotReadableException, which Spring Boot handles natively and returns 400 rather than 401. Now checking whether the Spring Security filter rejects CSRF requests.
+
+CSRF is disabled. The user may be confusing login credential errors with form validation errors. A custom Filter might be returning 401 on bad requests. MethodSecurity annotations such as @PreAuthorize could also trigger 401 responses.
+
+Also considering frontend issues where a 400 response might render incorrectly or return HTML from a proxy. Adding explicit handlers for HttpMessageNotReadableException, ConstraintViolationException, and HandlerMethodValidationException to ensure validation errors return 400 Bad Request.
+
+Checking the ErrorBanner component confirms VALIDATION_ERROR messages display correctly. The 401 returned for bad passwords during login is actually the intended behavior for authentication failures. Need to verify whether AuthController throws BadCredentialsException for empty fields, or if @Valid on the login endpoint prevents that. Also checking if GlobalExceptionHandler is imported in the web MVC test.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/GlobalExceptionHandlerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/api/AuthController.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "GlobalExceptionHandler|ExceptionHandler"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "GlobalExceptionHandler|ExceptionHandler",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "backend/src/test/java/com/supportticket/api/WebMvcSecurityTestImports.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/test/java/com/supportticket/api/GlobalExceptionHandlerWebMvcTest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/test/java/com/supportticket/api/AuthControllerWebMvcTest.java"
+    },
+    {
+      "matchCount": 9,
+      "uri": "backend/src/main/java/com/supportticket/exception/GlobalExceptionHandler.java"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 16
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+WebMvcSecurityTestImports already includes GlobalExceptionHandler, which is useful for controller tests.
+
+GlobalExceptionHandler should auto-discover as @RestControllerAdvice in a full Spring Boot app. Checking whether AuthControllerWebMvcTest already returns 400 for login validation errors.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/AuthControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/AuthServiceImpl.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/api/dto/ErrorResponse.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Examining the login failure path for empty credentials.
+
+Empty credentials should trigger 400 validation errors before authentication runs. Wrong passwords should still return 401. Checking whether GlobalExceptionHandler is registered in the main application class.
+
+Checking if the response is already committed when exceptions occur. Reviewing DefaultHandlerExceptionResolver behavior and HttpMessageNotReadableException handling.
+
+Now investigating frontend-side causes. The ErrorBanner or ApiError component may be misinterpreting 400 responses. Checking if CORS preflight is interfering. Also examining whether ProtectedRoute or client.ts redirects on 401, which would mask the real validation error.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/auth/AuthContext.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/types/api.ts</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/WebMvcSecurityTestImports.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Focusing on login validation to fix the incorrect 401 response.
+
+Empty login fields should return 400 Bad Request. Wrong credentials returning 401 may be mistaken for validation errors. Need to determine whether the issue is in login validation or protected API validation.
+
+Empty strings, whitespace, and missing JSON fields all trigger @NotBlank validation and should return 400. The 401 response likely comes from BadCredentialsException during authentication rather than from validation.
+
+Protected endpoints reject requests before controller validation runs. Missing tokens or expired JWTs trigger 401 responses. This is expected behavior. A query exception causing a 401 is unlikely.
+
+Checking whether missing @Valid annotations or missed BindException handlers cause validation errors to surface as authentication failures. SQL exceptions would return 500 instead. The login page HTML5 required attributes likely block empty submissions before they reach the server.
+
+The controller invokes the validation interceptor before the method body runs. Empty credentials should therefore trigger @Valid and return 400. The 401 response suggests authentication is failing before validation can execute.
+
+Confirmed that @NotBlank is present on LoginRequest fields, so validation should intercept empty credentials before authentication runs. Integration tests verify that invalid user bodies return 400. The GlobalExceptionHandler package is included in the component scan, ruling out a missing bean.
+
+Spring's default ResponseEntityExceptionHandler should still return 400 even without field-level details. A broad @ExceptionHandler for AuthenticationException would not catch validation errors, since MethodArgumentNotValidException does not extend that class. Duplicate username errors from the service layer correctly return 400. The login page may rely on client-side validation, while the API returns 401 for invalid credentials.
+
+The frontend ErrorBanner displays "UNAUTHORIZED: Invalid username or password" when the backend returns a 401 BadCredentialsException. This likely causes users to mistake authentication failures for validation errors. Wrong passwords should remain 401, but empty login fields and invalid payloads on protected endpoints should return 400. If protected endpoints currently return 401 for validation errors, that is the actual bug to fix.
+
+Checking if ExceptionTranslationFilter converts validation exceptions to 401. The debounced search endpoint might be triggering an invalid API response. UserControllerWebMvcTest with @WithMockUser should return 400 for invalid bodies. Need to verify how the exception handler behaves with security filters enabled.
+
+Adding explicit exception handlers for HttpMessageNotReadableException, BindException, HandlerMethodValidationException, and ConstraintViolationException to ensure validation errors return 400. GlobalExceptionHandler will be set to highest precedence. A test with security filters enabled will verify that empty login bodies return 400.
+
+A token key mismatch could cause the frontend to omit the Authorization header entirely, producing a 401 that the user might mistake for a validation error. JwtService.parseToken throwing an exception might also clear the security context and trigger a 401 on protected endpoints. The plan now includes adding explicit exception handlers for HttpMessageNotReadableException and HandlerMethodValidationException.
+
+Checking whether Spring Security wraps MethodArgumentNotValidException, which would explain why validation errors return 401 instead of 400. Also verifying that non-admin authenticated users receive 403 rather than 401.
+
+The create user endpoint already returns 400 for invalid bodies under security filters. A short password triggers @Size validation and produces a 400 response. The faults list endpoint was also fixed to return 400 instead of 401 when no data exists.
+
+Considering whether a non-JSON error response breaks parseApiError and surfaces a 401 status. Also examining if invalid JSON on protected endpoints triggers 401 before Spring MVC can read the body. The filter order needs review: JwtAuthenticationFilter runs before security authorization, yet the request body is only read inside DispatcherServlet when the controller method executes.
+
+Authorization runs before the dispatcher reads the request body, so an unauthenticated call with an invalid payload returns 401 before validation can execute. A valid authenticated request with invalid data should return 400 via @Valid. The test setup using @WithMockUser may not match the real JwtUserPrincipal with ROLE_ADMIN authority, which could affect how roles are resolved.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/security/JwtUserPrincipal.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/pages/LoginPage.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "BadRequest|ResponseEntityExceptionHandler"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "BadRequest|ResponseEntityExceptionHandler",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/supportticket/api/GlobalExceptionHandlerWebMvcTest.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/supportticket/api/CommentControllerWebMvcTest.java"
+    },
+    {
+      "matchCount": 3,
+      "uri": "backend/src/main/java/com/supportticket/service/UserServiceImpl.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/service/TicketServiceImpl.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/supportticket/api/UserControllerWebMvcTest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/test/java/com/supportticket/service/TicketServiceTest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/test/java/com/supportticket/api/TicketControllerListCreateWebMvcTest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/exception/GlobalExceptionHandler.java"
+    },
+    {
+      "matchCount": 1,
+      "uri": "backend/src/test/java/com/supportticket/api/TicketControllerDetailUpdateWebMvcTest.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/main/java/com/supportticket/exception/BadRequestException.java"
+    },
+    {
+      "matchCount": 2,
+      "uri": "backend/src/test/java/com/supportticket/service/UserServiceTest.java"
+    }
+  ],
+  "totalFiles": 11,
+  "totalMatches": 19
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking SecurityWebMvcTestConfiguration. Invalid tokens might be causing the 401 errors.
+
+Suspecting HandlerMethodValidationNotSupportedException with Jakarta validation on records. Will review CommentControllerWebMvcTest for validation patterns. Considering extending GlobalExceptionHandler for HttpMessageNotReadableException and MissingServletRequestParameterException.
+
+Spring Security 6.3+ may throw AuthorizationDeniedException instead of AccessDeniedException. A custom filter could return 401 on exceptions. Login validation tests likely need WebMvcSecurityTestImports rather than addFilters=false. The AuthenticationException handler might be too broad.
+
+BadCredentialsException should remain 401 since it is an authentication failure, not a validation error. IllegalArgumentException from Jackson enum parsing and MethodArgumentTypeMismatchException for query parameters also need mapping to 400 Bad Request. The frontend ErrorBanner already displays field-level validation errors properly.
+
+A 401 response labeled "Authentication required" during form submission suggests the user may be treating invalid credentials as a validation error. Empty fields on CreateUserPage trigger @NotBlank constraints and should return 400 Bad Request. The client could display a "Session expired" message instead of mislabeling the 401.
+
+The apiRequest helper always attaches a token when present, so missing-token calls are unlikely. The root cause appears to be Spring Security rejecting invalid Bearer tokens before validation runs, which triggers a 401 "Authentication required" response instead of the expected 400 validation error.
+
+Protected routes cannot return 400 validation errors without authentication. The frontend should treat 401 responses as session expiration rather than validation failures. A valid session might still trigger a 401 if a backend persistence exception occurs. Null values in JSON payloads such as `UpdateTicketRequest.title` cause `@NotBlank` violations, which already map to 400 Bad Request.
+
+Missing PATCH request bodies may raise HttpMessageNotReadableException or RequiredRequestBodyException in Spring 6.1. These cases need explicit 400 handlers. BasicErrorController returns JSON for /error paths.
+
+GlobalExceptionHandler currently does not extend ResponseEntityExceptionHandler, so some Spring MVC exceptions may fall through to basic error pages with unexpected formatting. I will extend it and add explicit handlers for HttpMessageNotReadableException, MissingServletRequestParameterException, MethodArgumentTypeMismatchException, and HandlerMethodValidationException. The class will also be marked with @Order(Ordered.HIGHEST_PRECEDENCE) to intercept exceptions before other handlers run.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/SecurityWebMvcTestConfiguration.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/config/RestAccessDeniedHandler.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking whether Spring's default error page returns 401 for unhandled exceptions.
+
+Ruled out the security filter chain as the cause. Spring Security's ExceptionTranslationFilter only handles AccessDeniedException and AuthenticationException, not validation errors.
+
+Controller exceptions route through DispatcherServlet. A ResponseEntityExceptionHandler extension will be added for completeness. Empty login fields should return 400 Bad Request instead of 401 Unauthorized. Tests will cover empty username and password submissions.
+
+A BadRequestException for empty login fields would be redundant with @Valid. The HTML form already enforces minimum password length and required username. The 401 might instead come from parseApiError when Spring Boot returns an HTML error page with status 401.
+
+If GlobalExceptionHandler is missing, Spring Boot's DefaultHandlerExceptionHandler returns 400 but with a different fieldErrors structure. The handler is properly registered as a component via @RestControllerAdvice. Now checking the application JavaScript configuration.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/SupportTicketApplication.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/resources",
+  "pattern": "spring.mvc|problem|error"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/resources",
+  "pattern": "spring.mvc|problem|error",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking JwtSecurityConfig to see if JwtAuthenticationFilter throws on invalid tokens and aborts the chain.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
+
+Directory: **`/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend`** (1 file)
+
+| File |
+|------|
+| `src/main/java/com/supportticket/config/JwtSecurityConfig.java` |
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Reviewing the validation error handling to fix the 401 response.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/config/JwtSecurityConfig.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking whether MethodArgumentNotValidException gets wrapped in AuthenticationException during login. That would explain why validation errors return 401 instead of 400.
+
+Invalid JSON or null body triggers HttpMessageNotReadableException before @Valid runs. Spring Security 6 also returns 401 for invalid credentials via BadCredentialsException. Both cases need to return 400 Bad Request.
+
+Wrong passwords are authentication failures, not validation errors. Bean validation should return 400 with field details. Login credential failures may switch to 400 with a soft error message. The plural "validation error" likely means form validation rather than authentication.
+
+The frontend ErrorBanner logic is correct. It shows "Request validation failed" for VALIDATION_ERROR and "UNAUTHORIZED: Authentication required" for UNAUTHORIZED. This confirms the backend is returning 401 for validation errors instead of 400.
+
+A concrete fix plan is taking shape. GlobalExceptionHandler needs to catch more exception types and return 400. The advice class should use an explicit base package scan. A new test will verify that blank login fields return 400 while security filters remain active. AuthServiceImpl should rely on @Valid for validation instead of calling authenticate.
+
+Invalid JSON on a protected POST can trigger Spring Security’s `AuthorizationDeniedException`. This causes the 401 before the request body is ever read. The filter rejects the call as an authentication failure before validation logic runs. A valid token paired with an invalid body would reach the controller and return 400.
+
+The user likely sent an unauthenticated request, causing Spring Security to reject it with 401 before validation runs. The backend fix will add explicit exception handlers for validation errors and return 400 instead. A test will verify that login validation failures return 400 while security filters remain active.
+
+Checking whether duplicate exception handlers exist and which one wins. The JWT filter clears the security context on exceptions but continues the chain as anonymous, so protected routes still return 401.
+
+Adding a handler for HttpMessageNotReadableException with a user-friendly message. The login endpoint will use an @ExceptionHandler with higher precedence so MethodArgumentNotValidException is caught before other exceptions. Spring Boot 3.2+ uses HandlerMethodValidationException for @NotNull on method parameters. Records DTOs work correctly with @Valid. Duplicate username errors already return 400 with a clear message, though without fieldErrors.
+
+GlobalExceptionHandler will not extend ResponseEntityExceptionHandler. That base class returns ProblemDetail, but the application expects ErrorResponse. Manual handlers will be added directly instead. One such handler will catch HttpMessageNotReadableException and return a 400 with the message "Malformed JSON request body".
+
+BindException should also be caught for non-@RequestBody validation failures. The user's earlier 401 bug was a separate backend query issue, not a validation error. The current request is about general 401 versus 400 responses for validation errors. The list tickets endpoint is already fixed.
+
+JPA or DataAccessExceptions are unlikely culprits, since those typically return 500 rather than 401. The next step is to add an integration test for create-user validation. A Docker dependency may be needed unless Testcontainers can spin up the database automatically.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/integration/AbstractIntegrationTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Updating the GlobalExceptionHandler to return 400 Bad Request for validation errors instead of 401 Unauthorized. Also checking whether login validation behaves correctly when security filters are active.
+
+AuthControllerWebMvcTest lacks security filter coverage for login validation. Adding a dedicated security test is under consideration. The exception handler ordering looks correct. MethodArgumentNotValidException is not an AuthenticationException. Now inspecting SecurityFilterChain.
+
+`SecurityFilterChain` uses `authenticated()` and `.hasRole("ADMIN")`, which returns 401 for anonymous users and 403 for non-admin roles. Spring Security's `FilterSecurityInterceptor` may throw `InsufficientAuthenticationException` before the controller runs. Login endpoints permit all access, so blank field validation occurs inside the controller and returns 400.
+
+A new `AuthControllerSecurityWebMvcTest` class will use `@WebMvcSecurityTestImports` to enable security filters during controller testing. A test will post login with empty strings and assert a 400 response.
+
+The test expects a 400 status and a VALIDATION_ERROR message. A 401 response would confirm the bug. Validation dependencies are present for @WebMvcTest. The test will run after creation.
+
+A rare edge case where the response commits as 401 before the exception handler runs is being considered. The ErrorBanner will be updated to suggest status-based hints for 401 responses on API calls. The frontend parseApiError function must use the actual response status to display field errors when the server returns 400. CORS preflight failures were ruled out. Invalid enum formats in JSON will be caught through HttpMessageNotReadableException.
+
+Custom validation messages will be added for the password field in CreateUserRequest. The AuthController security test will be run locally next. The @ControllerAdvice is global and not restricted to the Auth module, and there is only one RestControllerAdvice bean in the application.
+
+GlobalExceptionHandler will extend ResponseEntityExceptionHandler. Overriding handleMethodArgumentNotValid directly will standardize validation error responses. The existing @ExceptionHandler method will be removed to avoid duplication.
+
+Existing @ExceptionHandler methods will be kept rather than replaced entirely. Missing handlers for HttpMessageNotReadableException and SrvletRequestBindingException subclasses will be added. BadCredentialsException for login will also return 400 Bad Request.
+
+BadCredentialsException will remain a 401 Unauthorized response rather than a 400 Bad Request, since the user asked for validation errors specifically. JwtAuthenticationFilter will continue as anonymous when tokens are invalid. The AuthController security test will be run next.
+
+Checking how JwtService.parseToken handles an empty Bearer token. An empty value would trigger a parsing exception caught by the filter, leaving the request as anonymous and returning 401 on protected endpoints.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/security/JwtService.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Checking application-test.yml for JWT configuration and verifying whether integration test logins work.
+
+Planning to add GlobalExceptionHandler support for HttpMessageNotReadableException and HandlerMethodValidationException. Ruled out Spring Security filter delegation issues. Now examining CommentControllerWebMvcTest validation tests.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/CommentControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Validation works correctly in WebMvcTest with security enabled.
+
+The frontend might be receiving non-JSON validation responses. The exception handler may not be producing JSON for validation paths. Validation errors currently return VALIDATION_ERROR instead of a standard error field. Tests only verify fieldErrors.
+
+The frontend API error message looks correct. A proxy converting 400 to 401 seems unlikely. The create user validation issue likely persists after recent changes. An integration test with a real admin JWT is needed. The plan is to extend GlobalExceptionHandler and refine the AuthenticationException handler.
+
+All validation errors including ConstraintViolationException and HttpMessageNotReadableException will return 400 Bad Request. The frontend ErrorBanner will display the validation message and list field errors.
+
+A critical root cause was identified. `AuthenticationException` is thrown by Spring Security's `ExceptionTranslationFilter` during access control, not inside controllers. `GlobalExceptionHandler` cannot intercept it, so `RestAuthenticationEntryPoint` returns 401 JSON instead of validation errors. This explains why validation errors on protected routes currently return 401. The user must be authenticated to reach those endpoints.
+
+Login credential failures will return 400 Bad Request with the message "Invalid username or password". This improves frontend UX since form UIs typically treat login errors as 400 rather than 401.
+
+Reconsidering the earlier assumption. Login credential failures are not validation errors. Empty or whitespace-only fields trigger @NotBlank constraints and return 400. Only untrimmed input reaching authentication causes 401.
+
+Confirmed that Jakarta Bean Validation 3.0's `@NotBlank` trims whitespace, so empty or whitespace-only strings return 400. The `createUser` endpoint already includes `@Valid`.
+
+Springdoc is not the cause. The ErrorBanner will now use the first field error's message as its title when field errors are present.
+
+ErrorResponse JSON serialization is confirmed correct. A login validation test with security filters enabled will be added. Production relies on component scanning for GlobalExceptionHandler, unlike explicit imports in WebMvc tests.
+
+No conditional logic blocks the exception handler. The existing WebMvc test already returns 400 for validation errors. The test profile uses Postgres via Testcontainers, so switching to H2 is unnecessary.
+
+A slice-level MockMvc test will validate errors without Docker. The test profile needs an embedded database. Checking application-test.yml.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/resources/application-test.yml</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Considering Spring MVC exception handling order with Security.
+
+The `@ExceptionHandler(AuthenticationException.class)` mapping in GlobalExceptionHandler likely causes 401 responses when authentication fails. Validation errors during user creation do not trigger authentication, so this handler may be misfiring. Checking the controller test to confirm expected behavior.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/TicketControllerListCreateWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Validation works correctly in tests. The 401 error likely comes from a different source.
+
+The frontend may be misreading 400 errors as 401. The login endpoint might also return UNAUTHORIZED instead of 400 for invalid credentials. I will add GlobalExceptionHandler mappings for validation exceptions and add a test for empty login responses.
+
+Changing BadCredentialsException to 400 would be inappropriate since invalid credentials are authentication errors. The focus remains on ensuring MethodArgumentNotValidException never returns 401. There is also a concern that ExceptionHandlerExceptionResolver might fail and fall back to a default error page with the wrong status.
+
+Extending ResponseEntityExceptionHandler directly and overriding handleMethodArgumentNotValid is the official Spring MVC hook. This should catch edge cases where @ExceptionHandler advice is skipped. Validation failures on @RequestBody should still reach the advice. @PreAuthorize exceptions return 403 through the security filter. Checking for class-level @Validated annotations.
+
+DataIntegrityViolationException will map to 400 for duplicate usernames. The frontend will display an expiration warning for 401 responses outside the login path. Field errors will render properly under the existing JSON fieldErrors structure.
+
+Spring Boot 3 defaults to a ProblemDetail body shape. A missing handler could leave the HTTP status at 401 while the body carries 400. The client parser reads body.status first. Then it falls back to response.status. I will add a full security test for the login endpoint. I also ruled out @EnableWebMvc disabling the advice.
+
+ExceptionTranslationFilter does not intercept validation exceptions; DispatcherServlet routes them to HandlerExceptionResolver, so the global advice should handle them. The user may be treating a wrong-password 401 as a validation error. Returning 400 for BadCredentialsException on the login endpoint alone was considered too narrow.
+
+I briefly considered returning 400 for BadCredentialsException on the login endpoint, but rejected it because standard practice keeps authentication failures as 401. The plan remains to enhance exception handlers for malformed JSON and other edge cases.
+
+The login endpoint will return 400 Bad Request for invalid credentials instead of 401 Unauthorized. Generic AuthenticationException will remain 401. A login validation test will be added.
+
+The existing `loginReturns401OnBadPassword` test must be updated to expect 400 instead of 401. The user's mention of a "validation error" likely refers to `@Valid` violations rather than credential failures. A new integration test, `ValidationWithSecurityIT`, will verify that validation errors return 400 Bad Request.
+
+The BadCredentialsException handler will stay at 401 to preserve REST semantics. The integration test will be skipped if Docker is unavailable. The immediate focus is adding handlers for HttpMessageNotReadableException and HandlerMethodValidationException.
+
+GlobalExceptionHandler needs @Order(HIGHEST_PRECEDENCE) to intercept errors before Spring Security. The frontend ErrorBanner will show a session-expired hint for 401 UNAUTHORIZED responses containing "Authentication required" on non-login pages. Existing comment validation tests already expect both fieldErrors and VALIDATION_ERROR in the JSON response. Invalid CSRF is disabled, so it cannot trigger a 401.
+
+HTTP Basic authentication is not in use. A Webpack development proxy returning 401 is unlikely because connection failures throw fetch errors rather than ApiError responses. I will add an AuthControllerSecurityWebMvcTest to cover login validation with security filters enabled. I also need to document that UserController POST requests without valid authentication return 401 before validation logic runs.
+
+Ruling out a filter-level workaround as overkill. The plan now includes a dedicated handler for login failures, possibly by having AuthService throw a BadRequestException directly instead of letting BadCredentialsException propagate. The ErrorBanner will also drop the "UNAUTHORIZED:" prefix for clearer messaging.
+
+AuthService will catch AuthenticationException and throw BadRequestException directly. This lets the global handler return 400 for invalid credentials instead of 401. The BadCredentials handler will remain for other authentication paths.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+Identifying likely causes: login failures return 401 via `BadCredentialsException`, and some request-body errors may bypass our handler. Fixing auth/login error mapping and strengthening validation exception handling.
+
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/AuthServiceImpl.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/exception/GlobalExceptionHandler.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/AuthControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/frontend/src/components/ErrorBanner.tsx</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/service/AuthServiceImpl.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/exception/GlobalExceptionHandler.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/main/java/com/supportticket/exception/GlobalExceptionHandler.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2** • Edit file: /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend/src/test/java/com/supportticket/api/AuthControllerWebMvcTest.java</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Adding a test to verify that invalid login credentials throw a BadRequestException.
+
+Searching tests for BadCredentials references. Adding an integration test for CTE user validation. Running Maven tests. Fixing the HandlerMethodValidationException handler if compilation fails. Checking the getAllValidationResults API.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "BadCredentials"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend",
+  "pattern": "BadCredentials",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2** • Run command: cd /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend &amp;&amp; ./mvnw -q test 2&gt;&amp;1 | tail -25</summary>
+```bash
+cd /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend && ./mvnw -q test 2>&1 | tail -25
+```
+
+```
+2026-09-20T23:38:32.278+05:30  INFO 17294 --- [support-ticket-management] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.supportticket.api.GlobalExceptionHandlerWebMvcTest]: GlobalExceptionHandlerWebMvcTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-20T23:38:32.290+05:30  INFO 17294 --- [support-ticket-management] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.supportticket.SupportTicketApplication for test class com.supportticket.api.GlobalExceptionHandlerWebMvcTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-09-20T23:38:32.330+05:30  INFO 17294 --- [support-ticket-management] [           main] c.s.a.GlobalExceptionHandlerWebMvcTest   : Starting GlobalExceptionHandlerWebMvcTest using Java 21.0.12 with PID 17294 (started by sourav-kumar-dey in /home/sourav-kumar-dey/Documents/C2_practice/SupportTicketManagement/backend)
+2026-09-20T23:38:32.331+05:30  INFO 17294 --- [support-ticket-management] [           main] c.s.a.GlobalExceptionHandlerWebMvcTest   : No active profile set, falling back to 1 default profile: "default"
+2026-09-20T23:38:32.587+05:30  WARN 17294 --- [support-ticket-management] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: [REDACTED:generic-password]
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-20T23:38:32.588+05:30  INFO 17294 --- [support-ticket-management] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationMana
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<think><details><summary>Thought Process</summary>
+Validation errors now return 400 Bad Request with proper messages. Tests pass.
+</details></think>
+
+_**Agent (composer-2.5)**_
+
+### Cause
+Several cases were returning **401** instead of **400**:
+- **Wrong login credentials** went through `AuthenticationManager` as `BadCredentialsException` → 401.
+- Some **body/validation** issues could fall outside the existing handler path.
+
+### Backend
+- **`AuthServiceImpl`**: failed login now throws **`BadRequestException`** (“Invalid username or password”) → **400** + `BAD_REQUEST`.
+- **`GlobalExceptionHandler`**:
+  - `@Order(HIGHEST_PRECEDENCE)` so advice wins over defaults.
+  - **`HandlerMethodValidationException`** → 400 + `VALIDATION_ERROR` + `fieldErrors`.
+  - **`HttpMessageNotReadableException`** (bad JSON / invalid types) → 400 + clear message.
+  - Removed the dedicated **`BadCredentialsException`** → 401 mapping (login no longer uses it).
+- **401** remains for missing/invalid JWT on protected APIs (“Authentication required”).
+
+### Frontend
+- **`ErrorBanner`**: for `VALIDATION_ERROR` (and when `fieldErrors` exist), shows **“Request validation failed”** and lists fields like `username: …`, `password: …` instead of prefixing with `UNAUTHORIZED`.
+
+### Tests
+- Login blank fields → **400** + `fieldErrors`.
+- Login bad password (via service) → **400** + message.
+
+`./mvnw test` passes. After restart, try empty create-user fields or a short password—you should see **400** with field messages, not **401**.
+
+---
+
+_**User**_
+
+I am getting below error->
+
+org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "users_pkey"
+  Detail: Key (id)=(4) already exists.
+
+but it throws UNAUTHORIZED: Authentication required, 
+Handle this in GLobal Exception Handler.
+Handle properly for 500 internal server error. It shouldn't default to 401
+
+---
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details></tool-use>
+
+_**Agent (composer-2.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details></tool-use>

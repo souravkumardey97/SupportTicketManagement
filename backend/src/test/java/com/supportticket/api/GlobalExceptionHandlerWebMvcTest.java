@@ -43,4 +43,20 @@ class GlobalExceptionHandlerWebMvcTest {
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.error").value("FORBIDDEN"));
     }
+
+    @Test
+    void dataIntegrityViolationReturns500Not401() throws Exception {
+        mockMvc.perform(post("/test/data-integrity"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.error").value("INTERNAL_SERVER_ERROR"))
+                .andExpect(jsonPath("$.message").value("A database error occurred while saving data"));
+    }
+
+    @Test
+    void unexpectedErrorReturns500WithJsonBody() throws Exception {
+        mockMvc.perform(post("/test/unexpected"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.error").value("INTERNAL_SERVER_ERROR"))
+                .andExpect(jsonPath("$.message").value("An unexpected error occurred while processing the request"));
+    }
 }
