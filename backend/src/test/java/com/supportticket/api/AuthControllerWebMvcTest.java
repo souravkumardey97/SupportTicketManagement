@@ -1,0 +1,62 @@
+package com.supportticket.api;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.supportticket.api.dto.LoginRequest;
+import com.supportticket.api.dto.LoginResponse;
+import com.supportticket.domain.Role;
+import com.supportticket.exception.GlobalExceptionHandler;
+import com.supportticket.service.AuthService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(controllers = AuthController.class)
+@Import({GlobalExceptionHandler.class})
+@org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc(addFilters = false)
+class AuthControllerWebMvcTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
+    private AuthService authService;
+
+    @Test
+    void loginReturnsTokenOnValidCredentials() throws Exception {
+        when(authService.login(any(LoginRequest.class)))
+                .thenReturn(new LoginResponse("jwt-token", "Bearer", Role.ADMIN));
+
+        mockMvc.perform(post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new LoginRequest("admin", "secret"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.accessToken").value("jwt-token"))
+                .andExpect(jsonPath("$.tokenType").value("Bearer"))
+                .andExpect(jsonPath("$.role").value("ADMIN"));
+    }
+
+    @Test
+    void loginReturns401OnBadPassword() throws Exception {
+        when(authService.login(any(LoginRequest.class)))
+                .thenThrow(new BadCredentialsException("Invalid credentials"));
+
+        mockMvc.perform(post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new LoginRequest("admin", "wrong"))))
+                .andExpect(status().isUnauthorized());
+    }
+}

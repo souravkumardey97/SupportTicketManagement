@@ -1,0 +1,23 @@
+# Build
+backend/target/
+frontend/dist/
+frontend/node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+*.iml
+.vscode/*
+!.vscode/settings.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

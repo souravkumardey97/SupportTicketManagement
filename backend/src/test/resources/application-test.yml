@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: support-ticket-management-test
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+app:
+  cors-allowed-origins:
+    - http://localhost:5173
+  jwt:
+    secret: test-jwt-secret-must-be-at-least-256-bits-for-hs256-please-change-in-ci
+    expiration-ms: 3600000
+  bootstrap:
+    admin:
+      username: test-admin
+      password: test-admin-password
+    user:
+      username: test-agent
+      password: test-agent-password
+
+logging:
+  level:
+    com.supportticket: WARN
+    org.springframework.security: WARN
