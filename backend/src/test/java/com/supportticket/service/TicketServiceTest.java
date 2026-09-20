@@ -17,6 +17,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -43,6 +45,17 @@ class TicketServiceTest {
 
     @InjectMocks
     private TicketServiceImpl ticketService;
+
+    @Test
+    void listTicketsWithNoFiltersUsesFindAllAndReturnsEmptyPage() {
+        when(ticketRepository.findAll(any(Pageable.class))).thenReturn(Page.empty());
+
+        var response = ticketService.listTickets(null, null, 0, 20, "createdAt,desc");
+
+        assertThat(response.content()).isEmpty();
+        assertThat(response.totalElements()).isZero();
+        verify(ticketRepository).findAll(any(Pageable.class));
+    }
 
     @Test
     void createTicketDefaultsPriorityToP1() {

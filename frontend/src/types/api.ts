@@ -65,10 +65,10 @@ export interface CreateTicketRequest {
 }
 
 export interface UpdateTicketRequest {
-  title?: string
+  title: string
   description?: string
-  priority?: TicketPriority
-  assigneeId?: number
+  priority: TicketPriority
+  assigneeId: number
 }
 
 export interface CreateCommentRequest {

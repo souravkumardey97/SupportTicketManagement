@@ -17,6 +17,17 @@ class TicketSearchFilterIT extends AbstractIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Test
+    void listWithNoFiltersReturnsEmptyPageWhenNoTickets() throws Exception {
+        String token = loginAsAdmin();
+
+        mockMvc.perform(get("/api/v1/tickets")
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.length()").value(0))
+                .andExpect(jsonPath("$.totalElements").value(0));
+    }
+
+    @Test
     void searchIsCaseInsensitiveAndCombinesWithStatusFilter() throws Exception {
         String token = loginAsAdmin();
 

@@ -49,6 +49,8 @@ export function TicketListPage() {
     }
   }, [keyword, status, page])
 
+  const hasFilters = keyword !== '' || status !== ''
+
   return (
     <div className="stack">
       <div className="page-header">
@@ -62,7 +64,7 @@ export function TicketListPage() {
           <input
             value={keywordInput}
             onChange={(e) => setKeywordInput(e.target.value)}
-            placeholder="Keyword (case-insensitive)"
+            placeholder="Title, description, assignee, or priority"
           />
         </label>
         <label>
@@ -84,7 +86,9 @@ export function TicketListPage() {
       {loading ? (
         <p className="muted">Loading tickets…</p>
       ) : tickets.length === 0 ? (
-        <p className="muted">No tickets match your filters.</p>
+        <p className="muted">
+          {hasFilters ? 'No tickets match your filters.' : 'No tickets created yet.'}
+        </p>
       ) : (
         <div className="table-wrap card">
           <table>

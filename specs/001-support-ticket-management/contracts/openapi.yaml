@@ -65,7 +65,7 @@ paths:
           in: query
           schema:
             type: string
-          description: Case-insensitive partial match on title and description
+          description: Case-insensitive partial match on title, description, assignee username, and priority
         - name: status
           in: query
           schema:
@@ -285,9 +285,11 @@ components:
           format: int64
     UpdateTicketRequest:
       type: object
+      required: [title, priority, assigneeId]
       properties:
         title:
           type: string
+          minLength: 1
           maxLength: 200
         description:
           type: string

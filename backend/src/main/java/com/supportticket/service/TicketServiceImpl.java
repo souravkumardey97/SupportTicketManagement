@@ -51,7 +51,7 @@ public class TicketServiceImpl implements TicketService {
     public TicketPageResponse listTickets(String keyword, TicketStatus status, int page, int size, String sort) {
         Pageable pageable = PageRequest.of(page, size, parseSort(sort));
         String normalizedKeyword = StringUtils.hasText(keyword) ? keyword.trim() : null;
-        Page<TicketEntity> result = ticketRepository.search(normalizedKeyword, status, pageable);
+        Page<TicketEntity> result = listTicketPage(normalizedKeyword, status, pageable);
         List<TicketResponse> content = result.getContent().stream()
                 .map(TicketMapper::toResponse)
                 .toList();
@@ -61,6 +61,19 @@ public class TicketServiceImpl implements TicketService {
                 result.getSize(),
                 result.getTotalElements(),
                 result.getTotalPages());
+    }
+
+    private Page<TicketEntity> listTicketPage(String keyword, TicketStatus status, Pageable pageable) {
+        if (keyword == null && status == null) {
+            return ticketRepository.findAll(pageable);
+        }
+        if (keyword != null && status != null) {
+            return ticketRepository.searchByStatusAndKeyword(status, keyword, pageable);
+        }
+        if (status != null) {
+            return ticketRepository.findByStatus(status, pageable);
+        }
+        return ticketRepository.searchByKeyword(keyword, pageable);
     }
 
     @Override
@@ -90,18 +103,12 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public TicketResponse updateTicket(Long ticketId, UpdateTicketRequest request) {
         TicketEntity ticket = findTicket(ticketId);
-        if (request.title() != null) {
-            ticket.setTitle(request.title().trim());
-        }
+        ticket.setTitle(request.title().trim());
         if (request.description() != null) {
             ticket.setDescription(request.description().trim());
         }
-        if (request.priority() != null) {
-            ticket.setPriority(request.priority());
-        }
-        if (request.assigneeId() != null) {
-            ticket.setAssignee(resolveAssignee(request.assigneeId()));
-        }
+        ticket.setPriority(request.priority());
+        ticket.setAssignee(resolveAssignee(request.assigneeId()));
         return TicketMapper.toResponse(ticketRepository.save(ticket));
     }
 

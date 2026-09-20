@@ -10,12 +10,13 @@ import {
   updateTicketStatus,
 } from '../api/ticketsApi'
 import { ErrorBanner } from '../components/ErrorBanner'
-import type {
-  Comment,
-  Ticket,
-  TicketPriority,
-  TicketStatus,
-  UserSummary,
+import {
+  ApiError,
+  type Comment,
+  type Ticket,
+  type TicketPriority,
+  type TicketStatus,
+  type UserSummary,
 } from '../types/api'
 
 export function TicketDetailPage() {
@@ -62,12 +63,42 @@ export function TicketDetailPage() {
     event.preventDefault()
     setSaving(true)
     setError(null)
+    const trimmedTitle = title.trim()
+    const parsedAssigneeId =
+      assigneeId === '' ? null : Number(assigneeId)
+    if (
+      !trimmedTitle ||
+      priority == null ||
+      parsedAssigneeId == null ||
+      Number.isNaN(parsedAssigneeId)
+    ) {
+      setSaving(false)
+      setError(
+        new ApiError({
+          message: 'Request validation failed',
+          error: 'VALIDATION_ERROR',
+          status: 400,
+          fieldErrors: {
+            ...(!trimmedTitle
+              ? { title: 'Title must not be null or empty' }
+              : {}),
+            ...(priority == null
+              ? { priority: 'Priority must not be null' }
+              : {}),
+            ...(parsedAssigneeId == null || Number.isNaN(parsedAssigneeId)
+              ? { assigneeId: 'Assignee must not be null' }
+              : {}),
+          },
+        }),
+      )
+      return
+    }
     try {
       const updated = await updateTicket(id, {
-        title,
+        title: trimmedTitle,
         description,
         priority,
-        assigneeId: Number(assigneeId),
+        assigneeId: parsedAssigneeId,
       })
       setTicket(updated)
     } catch (err) {

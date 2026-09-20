@@ -1,0 +1,16 @@
+1. In spec.md, FR-004 says priority as mandatory field for ticket creation, 
+where as FR 017 says it's not mandatory, as it sets a default value if not provided during creation.
+
+2. In the listTickets API (for listing and filtering), While Listing the tickets for first time, 
+it doesn’t send any status from ui.
+In API, this parameter is not mandatory; in TicketEntity it is mandatory which is correct. 
+But inside service layer in the repo call the query is written in a way where status = null is accepted.
+So when after log in user lands on this page, UI sends null which leads to returning null as status = null is passed,  which is wrong.
+
+When no data is returned, API returns 401 unauthorized exception. Which is wrong.
+So first the query must be adjusted to handle if no filter criteria is passed in payload.
+Secondly if no data found it should give some meaningful message.
+
+
+3. In ticket creation, the title is mandatory, but in update it was possible to make title blank.
+Which is contradictory for create and update

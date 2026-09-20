@@ -10,18 +10,29 @@ import org.springframework.data.repository.query.Param;
 
 public interface TicketRepository extends JpaRepository<TicketEntity, Long> {
 
+    Page<TicketEntity> findByStatus(TicketStatus status, Pageable pageable);
+
     @Query("""
             SELECT t FROM TicketEntity t
-            WHERE (:status IS NULL OR t.status = :status)
+            WHERE LOWER(t.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
+               OR LOWER(t.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
+               OR LOWER(t.assignee.username) LIKE LOWER(CONCAT('%', :keyword, '%'))
+               OR LOWER(CAST(t.priority AS string)) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            """)
+    Page<TicketEntity> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query("""
+            SELECT t FROM TicketEntity t
+            WHERE t.status = :status
               AND (
-                :keyword IS NULL OR TRIM(:keyword) = ''
-                OR LOWER(t.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                LOWER(t.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
                 OR LOWER(t.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                OR LOWER(t.assignee.username) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                OR LOWER(CAST(t.priority AS string)) LIKE LOWER(CONCAT('%', :keyword, '%'))
               )
             """)
-    Page<TicketEntity> search(
-            @Param("keyword") String keyword,
+    Page<TicketEntity> searchByStatusAndKeyword(
             @Param("status") TicketStatus status,
+            @Param("keyword") String keyword,
             Pageable pageable);
-
 }

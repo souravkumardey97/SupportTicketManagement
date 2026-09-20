@@ -74,13 +74,34 @@ class TicketControllerDetailUpdateWebMvcTest {
                 Instant.parse("2026-09-19T10:00:00Z"), Instant.parse("2026-09-19T11:00:00Z"));
         when(ticketService.updateTicket(eq(1L), any(UpdateTicketRequest.class))).thenReturn(updated);
 
-        UpdateTicketRequest request = new UpdateTicketRequest("Updated title", null, TicketPriority.P0, null);
+        UpdateTicketRequest request = new UpdateTicketRequest(
+                "Updated title", "Updated description", TicketPriority.P0, 2L);
         mockMvc.perform(patch("/api/v1/tickets/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Updated title"))
                 .andExpect(jsonPath("$.priority").value("P0"));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void patchTicketRejectsNullOrEmptyTitlePriorityAndAssignee() throws Exception {
+        mockMvc.perform(patch("/api/v1/tickets/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "title": "",
+                                  "description": "Still here",
+                                  "priority": null,
+                                  "assigneeId": null
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.fieldErrors.title").value("Title must not be null or empty"))
+                .andExpect(jsonPath("$.fieldErrors.priority").value("Priority must not be null"))
+                .andExpect(jsonPath("$.fieldErrors.assigneeId").value("Assignee must not be null"));
     }
 
     private static TicketResponse sampleTicket() {
